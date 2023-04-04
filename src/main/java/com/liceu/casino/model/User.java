@@ -21,4 +21,6 @@ public class User {
     Long coins;
 
 
+    public User(String name, String email, String password) {
+    }
 }
