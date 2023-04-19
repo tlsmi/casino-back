@@ -18,6 +18,7 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/login")
+    @CrossOrigin
     public String login(@RequestBody LoginForm loginForm, HttpServletResponse response){
         User user = userService.login(loginForm);
         if(user == null) {
