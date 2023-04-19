@@ -37,4 +37,14 @@ public class RegisterForm {
     public void setPasswordRep(String passwordRep) {
         this.passwordRep = passwordRep;
     }
+
+    @Override
+    public String toString() {
+        return "RegisterForm{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", passwordRep='" + passwordRep + '\'' +
+                '}';
+    }
 }
