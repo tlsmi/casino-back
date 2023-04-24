@@ -1,10 +1,26 @@
 package com.liceu.casino.forms;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.Column;
+import jakarta.persistence.Id;
+
 public class RegisterForm {
+    String dni;
     String name;
+    String surname1;
+    String surname2;
     String email;
+    String birthDate;
+    String gender;
     String password;
-    String passwordRep;
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
 
     public String getName() {
         return name;
@@ -12,6 +28,22 @@ public class RegisterForm {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSurname1() {
+        return surname1;
+    }
+
+    public void setSurname1(String surname1) {
+        this.surname1 = surname1;
+    }
+
+    public String getSurname2() {
+        return surname2;
+    }
+
+    public void setSurname2(String surname2) {
+        this.surname2 = surname2;
     }
 
     public String getEmail() {
@@ -22,6 +54,22 @@ public class RegisterForm {
         this.email = email;
     }
 
+    public String getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(String birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -30,11 +78,17 @@ public class RegisterForm {
         this.password = password;
     }
 
-    public String getPasswordRep() {
-        return passwordRep;
-    }
-
-    public void setPasswordRep(String passwordRep) {
-        this.passwordRep = passwordRep;
+    @Override
+    public String toString() {
+        return "RegisterForm{" +
+                "dni='" + dni + '\'' +
+                ", name='" + name + '\'' +
+                ", surname1='" + surname1 + '\'' +
+                ", surname2='" + surname2 + '\'' +
+                ", email='" + email + '\'' +
+                ", birthDate='" + birthDate + '\'' +
+                ", gender='" + gender + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }
