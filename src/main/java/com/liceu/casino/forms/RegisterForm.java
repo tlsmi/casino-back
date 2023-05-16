@@ -1,9 +1,5 @@
 package com.liceu.casino.forms;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
-
 public class RegisterForm {
     String dni;
     String name;
@@ -11,7 +7,6 @@ public class RegisterForm {
     String surname2;
     String email;
     String birthDate;
-    String gender;
     String password;
 
     public String getDni() {
@@ -62,14 +57,6 @@ public class RegisterForm {
         this.birthDate = birthDate;
     }
 
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -87,7 +74,6 @@ public class RegisterForm {
                 ", surname2='" + surname2 + '\'' +
                 ", email='" + email + '\'' +
                 ", birthDate='" + birthDate + '\'' +
-                ", gender='" + gender + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }

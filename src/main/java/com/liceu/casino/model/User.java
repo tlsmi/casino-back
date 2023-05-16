@@ -16,7 +16,6 @@ public class User {
     @Column(unique = true)
     String email;
     String birthDate;
-    String gender;
     @JsonIgnore
     String password;
 //    List<Card> cards;
@@ -26,14 +25,13 @@ public class User {
 
     }
 
-    public User(String dni, String name, String surname1, String surname2, String email, String birthDate, String gender, String password) {
+    public User(String dni, String name, String surname1, String surname2, String email, String birthDate, String password) {
         this.dni = dni;
         this.name = name;
         this.surname1 = surname1;
         this.surname2 = surname2;
         this.email = email;
         this.birthDate = birthDate;
-        this.gender = gender;
         this.password = password;
         this.coins = 0L;
     }
@@ -86,14 +84,6 @@ public class User {
         this.birthDate = birthDate;
     }
 
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -119,7 +109,6 @@ public class User {
                 ", surname2='" + surname2 + '\'' +
                 ", email='" + email + '\'' +
                 ", birthDate='" + birthDate + '\'' +
-                ", gender='" + gender + '\'' +
                 ", password='" + password + '\'' +
                 ", coins=" + coins +
                 '}';
