@@ -64,17 +64,4 @@ public class RegisterForm {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    @Override
-    public String toString() {
-        return "RegisterForm{" +
-                "dni='" + dni + '\'' +
-                ", name='" + name + '\'' +
-                ", surname1='" + surname1 + '\'' +
-                ", surname2='" + surname2 + '\'' +
-                ", email='" + email + '\'' +
-                ", birthDate='" + birthDate + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
 }

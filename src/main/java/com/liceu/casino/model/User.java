@@ -8,6 +8,9 @@ import java.util.List;
 @Entity
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+
     @Column(unique = true, length = 9)
     String dni;
     String name;
@@ -18,7 +21,7 @@ public class User {
     String birthDate;
     @JsonIgnore
     String password;
-//    List<Card> cards;
+    //    List<Card> cards;
     Long coins;
 
     public User(){
