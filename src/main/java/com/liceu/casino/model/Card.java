@@ -4,7 +4,7 @@ public class Card {
     private Rank rank;
     private Suit suit;
 
-    public Card(String rank, String suit) {
+    public Card(Rank rank, Suit suit) {
         this.rank = rank;
         this.suit = suit;
     }
@@ -13,7 +13,7 @@ public class Card {
         return rank;
     }
 
-    public Suit getSuit() {
+    public Suit getPalo() {
         return suit;
     }
 

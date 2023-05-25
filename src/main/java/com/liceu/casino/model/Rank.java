@@ -1,19 +1,19 @@
 package com.liceu.casino.model;
 
 public enum Rank {
-    ACE(1),
-    TWO(2),
-    THREE(3),
-    FOUR(4),
-    FIVE(5),
-    SIX(6),
-    SEVEN(7),
-    EIGHT(8),
-    NINE(9),
-    TEN(10),
-    JACK(10),
-    QUEEN(10),
-    KING(10);
+    AS(1),
+    DOS(2),
+    TRES(3),
+    CUATRO(4),
+    CINCO(5),
+    SEIS(6),
+    SIETE(7),
+    OCHO(8),
+    NUEVE(9),
+    DIEZ(10),
+    JOTA(10),
+    CU(10),
+    CA(10);
 
     private int value;
 
