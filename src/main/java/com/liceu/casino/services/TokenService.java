@@ -24,7 +24,7 @@ public class TokenService {
         return token;
     }
 
-    public String getUser(String token) {
+    public String getEmail(String token) {
         String user = JWT.require(Algorithm.HMAC512(tokenSecret.getBytes()))
                 .build()
                 .verify(token)
