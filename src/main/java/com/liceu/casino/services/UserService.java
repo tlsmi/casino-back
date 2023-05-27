@@ -1,6 +1,7 @@
 package com.liceu.casino.services;
 
 import com.liceu.casino.DAO.UserDAO;
+import com.liceu.casino.DTO.ProfileDTO;
 import com.liceu.casino.forms.LoginForm;
 import com.liceu.casino.forms.RegisterForm;
 import com.liceu.casino.model.User;
@@ -45,5 +46,17 @@ public class UserService {
         //si coincide la contraseña del usuario encontrado con la introducida (ambas encriptadas) lo devuelve
         if (u.getPassword().equals(encoder.encode(loginForm.getPassword()))) return u;
         return null;
+    }
+
+    public ProfileDTO newProfile(User user) {
+        return new ProfileDTO(
+                user.getDni(),
+                user.getName(),
+                user.getSurname1(),
+                user.getSurname2(),
+                user.getEmail(),
+                user.getBirthDate(),
+                user.getCoins()
+        );
     }
 }

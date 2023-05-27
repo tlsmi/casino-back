@@ -1,42 +1,25 @@
-package com.liceu.casino.model;
+package com.liceu.casino.DTO;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
 
-import java.util.List;
-
-@Entity
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-
-    @Column(length = 9)
+public class ProfileDTO {
     String dni;
     String name;
     String surname1;
     String surname2;
-    @Column(unique = true)
     String email;
     String birthDate;
-    @JsonIgnore
-    String password;
-    //    List<Card> cards;
     Long coins;
 
-    public User(){
-
-    }
-
-    public User(String dni, String name, String surname1, String surname2, String email, String birthDate, String password) {
+    public ProfileDTO(String dni, String name, String surname1, String surname2, String email, String birthDate, Long coins) {
         this.dni = dni;
         this.name = name;
         this.surname1 = surname1;
         this.surname2 = surname2;
         this.email = email;
         this.birthDate = birthDate;
-        this.password = password;
-        this.coins = 0L;
+        this.coins = coins;
     }
 
     public String getDni() {
@@ -87,33 +70,11 @@ public class User {
         this.birthDate = birthDate;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public Long getCoins() {
         return coins;
     }
 
     public void setCoins(Long coins) {
         this.coins = coins;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "dni='" + dni + '\'' +
-                ", name='" + name + '\'' +
-                ", surname1='" + surname1 + '\'' +
-                ", surname2='" + surname2 + '\'' +
-                ", email='" + email + '\'' +
-                ", birthDate='" + birthDate + '\'' +
-                ", password='" + password + '\'' +
-                ", coins=" + coins +
-                '}';
     }
 }
