@@ -6,12 +6,12 @@ import jakarta.persistence.Id;
 import java.util.List;
 
 @Entity
-public class BetResult {
+public class Bet {
     @Id
     String[] emailUser;
 
-    private BetQuantity quantity;
     int total;
+
     private List<Object[]> par;
 
     private List<String[]> color;
@@ -46,14 +46,6 @@ public class BetResult {
 
     public void setEmailUser(String[] emailUser) {
         this.emailUser = emailUser;
-    }
-
-    public BetQuantity getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(BetQuantity quantity) {
-        this.quantity = quantity;
     }
 
     public List<Object[]> getPar() {

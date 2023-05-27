@@ -17,7 +17,6 @@ public class UserService {
         System.out.println(registerForm);
         //existe un usuario con ese nombre o las contraseñas no coinciden?
         if (!userdao.findByEmail(registerForm.getEmail()).isEmpty()) return false;
-        if (!registerForm.getPassword().equals(registerForm.getPasswordRep())) return false;
         //crea y guarda el usuario
         User user = new User(
                 registerForm.getDni(),
