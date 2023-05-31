@@ -68,9 +68,14 @@ public class UserService {
         return users.get(0);
     }
 
-    public boolean validatePassword(ProfileForm profileForm, String oldEmail){
+    public boolean validateEmail(ProfileForm profileForm, String oldEmail){
         if (!userdao.findByEmail(profileForm.getEmail()).isEmpty() && !profileForm.getEmail().equals(oldEmail)) return false;
         return true;
+    }
+
+    public boolean validatePassword(String currentPass, String pass){
+        if (currentPass.equals(encoder.encode(pass)))return true;
+        else return false;
     }
     public void updateProfile(Long id, ProfileForm profileForm) {
         userdao.updateProfile(

@@ -74,12 +74,17 @@ public class UserController {
         Map<String, Object> map = new HashMap<>();
         String email = tokenService.getEmail(token.replace("Bearer ",""));
         User user = userService.getUserByEmail(email);
+        if (!userService.validatePassword(user.getPassword(), profileForm.getPassword())){
+            map.put("message", "Contraseña incorrecta");
+            response.setStatus(400);
+            return map;
+        }
         if(user == null){
             map.put("message", "No existe un usuario con ese correo");
             response.setStatus(400);
             return map;
         }
-        if(!userService.validatePassword(profileForm, user.getEmail())){
+        if(!userService.validateEmail(profileForm, user.getEmail())){
             map.put("message", "Ya existe un usuario con ese correo");
             response.setStatus(400);
             return map;
