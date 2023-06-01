@@ -15,6 +15,7 @@ public class RouletteService {
 
         boolean isCol1 = false;
         int num = (int) Math.floor(Math.random() * 36);
+        result.setNumber(Collections.singletonList(new Object[]{num}));
         System.out.println(num);
         int[] rojos = {1, 3, 5, 7, 9, 10, 12, 14, 16, 18, 19, 21, 23, 25, 27, 28, 30, 32, 34, 36};
         int[] columna1 = {1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34};
@@ -37,21 +38,21 @@ public class RouletteService {
 
             //Mira si el num es de los 18 primeros o no
             if (num > 18) {
-                result.setMitad(Collections.singletonList(new int[]{2}));
+                result.setMitad(Collections.singletonList(new Object[]{2}));
             }
 
             //Mira si esta en la columna 1
-            for (int n:columna1) {
+            for (int n : columna1) {
                 if (n == num) {
-                    result.setColumna(Collections.singletonList(new int[]{1}));
+                    result.setColumna(Collections.singletonList(new Object[]{1}));
                 }
             }
 
 
             //Mira si esta en la columna 2 y sino lo pone en la 3
-            for (int n:columna1) {
+            for (int n : columna1) {
                 if (n == num) {
-                    result.setColumna(Collections.singletonList(new int[]{1}));
+                    result.setColumna(Collections.singletonList(new Object[]{1}));
                     isCol1 = true;
                     break;
                 }
@@ -60,66 +61,66 @@ public class RouletteService {
             if (!isCol1) {
                 for (int n : columna2) {
                     if (n == num) {
-                        result.setColumna(Collections.singletonList(new int[]{2}));
+                        result.setColumna(Collections.singletonList(new Object[]{2}));
                         break;
                     }
                 }
-                result.setColumna(Collections.singletonList(new int[]{3}));
+                result.setColumna(Collections.singletonList(new Object[]{3}));
             }
 
             //Mira en que docena esta el numero
             if (num < 13) {
-                result.setDocena(Collections.singletonList(new int[]{1}));
-            } else if (num > 24){
-                result.setDocena(Collections.singletonList(new int[]{3}));
-            }else{
-                result.setDocena(Collections.singletonList(new int[]{2}));
+                result.setDocena(Collections.singletonList(new Object[]{1}));
+            } else if (num > 24) {
+                result.setDocena(Collections.singletonList(new Object[]{3}));
+            } else {
+                result.setDocena(Collections.singletonList(new Object[]{2}));
             }
 
-        }else{
+        } else {
             result.setColor(Collections.singletonList(new String[]{"verde"}));
-            result.setMitad(Collections.singletonList(new int[]{0}));
-            result.setColumna(Collections.singletonList(new int[]{0}));
-            result.setDocena(Collections.singletonList(new int[]{0}));
+            result.setMitad(Collections.singletonList(new Object[]{0}));
+            result.setColumna(Collections.singletonList(new Object[]{0}));
+            result.setDocena(Collections.singletonList(new Object[]{0}));
         }
         return result;
     }
 
-    public int getCoinsByResult(Bet result,Bet apuesta) {
+    public int getCoinsByResult(Bet result, Bet apuesta) {
 
-        int totalLeft = apuesta.getTotal();
+        int totalLeft = (int) apuesta.getTotal();
 
-        totalLeft += compareParity(result.getPar(),apuesta.getPar());
-        totalLeft += compareColor(result.getColor(),apuesta.getColor());
-        totalLeft += compareHalf(result.getMitad(),apuesta.getMitad());
-        totalLeft += compareColumn(result.getColumna(),apuesta.getColumna());
-        totalLeft += compareDozen(result.getDocena(),apuesta.getDocena());
+        if (apuesta.getPar() != null){
+            totalLeft += compare(result.getPar().get(0)[0], apuesta.getPar());
+        }
+        if (apuesta.getColor() != null){
+            totalLeft += compare(result.getColor().get(0)[0], apuesta.getColor());
+        }
+        if (apuesta.getMitad() != null){
+            totalLeft += compare(result.getMitad().get(0)[0], apuesta.getMitad());
+        }
+        if (apuesta.getColumna() != null){
+            totalLeft += compare(result.getColumna().get(0)[0], apuesta.getColumna());
+        }
+        if (apuesta.getDocena() != null){
+            totalLeft += compare(result.getDocena().get(0)[0], apuesta.getDocena());
+        }
+        if (apuesta.getNumber() != null){
+            totalLeft += compare(result.getNumber().get(0)[0], apuesta.getNumber());
+        }
 
         return totalLeft;
     }
-
-    private int compareDozen(List<int[]> docena, List<int[]> apuestaDocena) {
-        for (int[] bet: apuestaDocena) {
-            if (bet[1] == docena.get(0)[0]){
-
+    private int compare(Object par, List<Object[]> apuestaPar) {
+        int result = 0;
+        for (Object[] objects : apuestaPar) {
+            if (par == objects[0]) {
+                result += (int) objects[1];
+            }else{
+                result -= (int) objects[1];
             }
         }
-        return 0;
-    }
 
-    private int compareColumn(List<int[]> columna, List<int[]> apuestaColumna) {
-        return 0;
-    }
-
-    private int compareHalf(List<int[]> mitad, List<int[]> apuestaMitad) {
-        return 0;
-    }
-
-    private int compareColor(List<String[]> color, List<String[]> apuestaColor) {
-        return 0;
-    }
-
-    private int compareParity(List<Object[]> par, List<Object[]> apuestaPar) {
-        return 0;
+        return result;
     }
 }

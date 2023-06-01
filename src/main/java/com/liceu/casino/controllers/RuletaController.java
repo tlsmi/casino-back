@@ -15,10 +15,10 @@ public class RuletaController {
     RouletteService ruletaService;
     @PostMapping("/games/roulette")
     @CrossOrigin
-    public Object roulette(@RequestBody Bet apuesta){
+    public Object roulette(@RequestBody Bet bet){
 
         Bet result = ruletaService.getResult();
-        int coins = ruletaService.getCoinsByResult(result,apuesta);
+        int coins = ruletaService.getCoinsByResult(result,bet);
         return coins;
     }
 }

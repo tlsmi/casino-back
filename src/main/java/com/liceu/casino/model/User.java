@@ -3,6 +3,7 @@ package com.liceu.casino.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.math.BigInteger;
 import java.util.List;
 
 @Entity
@@ -22,7 +23,7 @@ public class User {
     @JsonIgnore
     String password;
     //    List<Card> cards;
-    Long coins;
+    BigInteger coins;
 
     public User(){
 
@@ -36,7 +37,7 @@ public class User {
         this.email = email;
         this.birthDate = birthDate;
         this.password = password;
-        this.coins = 0L;
+        this.coins = new BigInteger("0");
     }
 
     public String getDni() {
@@ -95,11 +96,11 @@ public class User {
         this.password = password;
     }
 
-    public Long getCoins() {
+    public BigInteger getCoins() {
         return coins;
     }
 
-    public void setCoins(Long coins) {
+    public void setCoins(BigInteger coins) {
         this.coins = coins;
     }
 
