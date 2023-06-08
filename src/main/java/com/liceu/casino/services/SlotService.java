@@ -60,11 +60,12 @@ public class SlotService {
         Arrays.fill(isSpin, false);
         credito -= apuesta;
         int gains = checkwin(apuestaUsuario);
+        if (gains > 0) map.put("message", "Has ganado " + gains + " créditos!");
+        else map.put("message", "");
         map.put("resultado", resultado);
         map.put("ganancias", gains);
         credito += gains;
         map.put("creditos", credito);
-        map.put("message", "");
         map.put("total", resultadoUlt);
 
         return map;
