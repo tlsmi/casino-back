@@ -16,18 +16,18 @@ public class TokenService {
     @Value("${token.expiration}")
     int tokenExpiration;
 
-    public String newToken(String user) {
+    public String newToken(String email) {
         String token = JWT.create()
-                .withSubject(user)
+                .withSubject(email)
                 .withExpiresAt(new Date(System.currentTimeMillis() + tokenExpiration))
                 .sign(Algorithm.HMAC512(tokenSecret.getBytes(StandardCharsets.UTF_8)));
         return token;
     }
 
-    public String getUser(String token) {
+    public String getEmail(String email) {
         String user = JWT.require(Algorithm.HMAC512(tokenSecret.getBytes()))
                 .build()
-                .verify(token)
+                .verify(email)
                 .getSubject();
         return user;
     }

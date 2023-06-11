@@ -1,50 +1,62 @@
 package com.liceu.casino.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.List;
 
 @Entity
 public class Bet {
     @Id
-    Object[] emailUser;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    Object total;
+    @ManyToOne
+    @JoinColumn(name = "emailUser")
+    private User emailUser;
+
+    private int total;
 
     private List<Object[]> par;
 
     private List<Object[]> color;
 
-    private List<Object[]> mitad;
+    private List<int[]> mitad;
 
-    private List<Object[]> columna;
+    private List<int[]> columna;
 
-    private List<Object[]> docena;
+    private List<int[]> docena;
 
-    private List<Object[]> number;
+    private List<int[]> number;
 
-    public Object getTotal() {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public int getTotal() {
         return total;
     }
 
-    public void setTotal(Object total) {
+    public void setTotal(int total) {
         this.total = total;
     }
 
-    public List<Object[]> getNumber() {
+    public List<int[]> getNumber() {
         return number;
     }
 
-    public void setNumber(List<Object[]> number) {
+    public void setNumber(List<int[]> number) {
         this.number = number;
     }
 
-    public Object[] getEmailUser() {
-        return emailUser;
+    public String getEmailUser() {
+        return emailUser.getEmail();
     }
 
-    public void setEmailUser(Object[] emailUser) {
+    public void setEmailUser(User emailUser) {
         this.emailUser = emailUser;
     }
 
@@ -64,27 +76,27 @@ public class Bet {
         this.color = color;
     }
 
-    public List<Object[]> getMitad() {
+    public List<int[]> getMitad() {
         return mitad;
     }
 
-    public void setMitad(List<Object[]> mitad) {
+    public void setMitad(List<int[]> mitad) {
         this.mitad = mitad;
     }
 
-    public List<Object[]> getColumna() {
+    public List<int[]> getColumna() {
         return columna;
     }
 
-    public void setColumna(List<Object[]> columna) {
+    public void setColumna(List<int[]> columna) {
         this.columna = columna;
     }
 
-    public List<Object[]> getDocena() {
+    public List<int[]> getDocena() {
         return docena;
     }
 
-    public void setDocena(List<Object[]> docena) {
+    public void setDocena(List<int[]> docena) {
         this.docena = docena;
     }
 }

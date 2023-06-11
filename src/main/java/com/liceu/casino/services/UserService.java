@@ -15,8 +15,8 @@ public class UserService {
     SHA512Encoder encoder;
     public boolean signup(RegisterForm registerForm){
         System.out.println(registerForm);
-        //existe un usuario con ese nombre o las contraseñas no coinciden?
-        if (!userdao.findByEmail(registerForm.getEmail()).isEmpty()) return false;
+        //existe un usuario con ese nombre?
+        if (userdao.findByEmail(registerForm.getEmail()) != null) return false;
         //crea y guarda el usuario
         User user = new User(
                 registerForm.getDni(),
@@ -35,12 +35,11 @@ public class UserService {
 
     public User login(LoginForm loginForm) {
         //si no encuentra usuario con ese email peta
-        if (userdao.findByEmail(loginForm.getEmail()).isEmpty()) return null;
+        if (userdao.findByEmail(loginForm.getEmail())==null) return null;
 
         //crea usuario asociado a ese mail
-        User u = userdao.findByEmail(loginForm.getEmail()).get(0);
+        User u = userdao.findByEmail(loginForm.getEmail());
 
-        //falta comprobar la contraseña encriptada, de momento está sin encriptar
         //si coincide la contraseña del usuario encontrado con la introducida (ambas encriptadas) lo devuelve
         if (u.getPassword().equals(encoder.encode(loginForm.getPassword()))) return u;
         return null;

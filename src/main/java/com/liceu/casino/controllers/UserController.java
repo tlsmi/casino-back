@@ -6,12 +6,8 @@ import com.liceu.casino.model.User;
 import com.liceu.casino.services.TokenService;
 import com.liceu.casino.services.UserService;
 import jakarta.servlet.http.HttpServletResponse;
-import org.apache.el.parser.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 public class UserController {
@@ -35,7 +31,7 @@ public class UserController {
         //token a partir del usuario encontrado
         String token = tokenService.newToken(user.getEmail());
         System.out.println("Esto es el token: " + token);
-        System.out.println("Esto deberia ser el correo " + tokenService.getUser(token));
+        System.out.println("Esto deberia ser el correo " + tokenService.getEmail(token));
         return null;
     }
 

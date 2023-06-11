@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface UserDAO extends JpaRepository <User, String> {
-    List<User> findByEmail(String email);
+    User findByEmail(String email);
     List<User> findByDni(String dni);
 }
