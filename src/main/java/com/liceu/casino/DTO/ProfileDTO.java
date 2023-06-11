@@ -3,6 +3,8 @@ package com.liceu.casino.DTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 
+import java.math.BigInteger;
+
 public class ProfileDTO {
     String dni;
     String name;
@@ -10,9 +12,9 @@ public class ProfileDTO {
     String surname2;
     String email;
     String birthDate;
-    Long coins;
+    long coins;
 
-    public ProfileDTO(String dni, String name, String surname1, String surname2, String email, String birthDate, Long coins) {
+    public ProfileDTO(String dni, String name, String surname1, String surname2, String email, String birthDate, long coins) {
         this.dni = dni;
         this.name = name;
         this.surname1 = surname1;
@@ -70,11 +72,11 @@ public class ProfileDTO {
         this.birthDate = birthDate;
     }
 
-    public Long getCoins() {
+    public long getCoins() {
         return coins;
     }
 
-    public void setCoins(Long coins) {
+    public void setCoins(long coins) {
         this.coins = coins;
     }
 }

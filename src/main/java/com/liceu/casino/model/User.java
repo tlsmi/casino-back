@@ -23,7 +23,7 @@ public class User {
     @JsonIgnore
     private String password;
     //    List<Card> cards;
-    private BigInteger coins;
+    private long coins;
 
     @OneToMany(mappedBy = "emailUser", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Bet> bets;
@@ -40,7 +40,7 @@ public class User {
         this.email = email;
         this.birthDate = birthDate;
         this.password = password;
-        this.coins = new BigInteger("0");
+        this.coins = 0L;
     }
 
     public Long getId() {
@@ -115,11 +115,11 @@ public class User {
         this.password = password;
     }
 
-    public BigInteger getCoins() {
+    public long getCoins() {
         return coins;
     }
 
-    public void setCoins(BigInteger coins) {
+    public void setCoins(long coins) {
         this.coins = coins;
     }
 
