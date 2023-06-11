@@ -78,7 +78,7 @@ public class UserController {
                                              @RequestBody ProfileForm profileForm){
         Map<String, Object> map = new HashMap<>();
         String email = tokenService.getEmail(token.replace("Bearer ",""));
-        User user = userService.getUserByEmail(email);
+        User user = userService.findByEmail(email);
         if (!userService.validatePassword(user.getPassword(), profileForm.getPassword())){
             map.put("message", "Contraseña incorrecta");
             response.setStatus(400);
@@ -110,7 +110,7 @@ public class UserController {
                                              @RequestHeader("Authorization") String token,
                                              @RequestBody PasswordForm passwordForm){
 
-        User user = userService.getUserByEmail(tokenService.getEmail(token.replace("Bearer ","")));
+        User user = userService.findByEmail(tokenService.getEmail(token.replace("Bearer ","")));
 
         boolean oldPassValidation = userService.validate(user.getEmail(), passwordForm.getCurrentPassword());
         Map<String, Object> map = new HashMap<>();
@@ -134,7 +134,7 @@ public class UserController {
     @GetMapping("/getprofile")
     @CrossOrigin
     public Object getprofile(@RequestHeader("Authorization") String token){
-        User user = userService.getUserByEmail(tokenService.getEmail(token.replace("Bearer ","")));
+        User user = userService.findByEmail(tokenService.getEmail(token.replace("Bearer ","")));
         ProfileDTO profile = userService.newProfile(user);
         return profile;
     }
