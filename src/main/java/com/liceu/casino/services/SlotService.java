@@ -1,39 +1,30 @@
 package com.liceu.casino.services;
 
-import org.aspectj.weaver.patterns.ConcreteCflowPointcut;
+import com.liceu.casino.DAO.UserDAO;
+import com.liceu.casino.model.Slot;
+import com.liceu.casino.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
 public class SlotService {
-    private static final String[] items = {"🍒", "🍇", "🍊", "🍋", "🔔", "💵", "💰", "💎"};
-    private static final int[] valor = {1, 2, 3, 4, 5, 10, 20, 50};
-    private static int credito = 100;
-    private static String[] resultado;
-    private static boolean[] isSpin = new boolean[]{false, false, false};
-    private static int apuestaUsuario = 0;
-    private static boolean firstInit = true;
-    private static int groups = 1;
-    private static int duration = 1;
-    private static List<String> resultadoUlt = new ArrayList<>();
+    @Autowired
+    UserService userService;
+    private long credito;
+    private String[] arResult;
+    private int apuestaUsuario = 0;
+    private List<String> resultSlot = new ArrayList<>();
+    private Slot slot = new Slot();
 
-/*    public SlotService () {
-        resultadoUlt.add("❓");
-        resultadoUlt.add("❓");
-        resultadoUlt.add("❓");
-    }*/
-
-    public static Map<String, Object> spin(Integer apuesta) {
+    public Map<String, Object> spin(Integer apuesta, User user) {
+        credito = user.getCoins();
         Map<String, Object> map = new HashMap<>();
         if (apuesta == 0) {
             map.put("message", "¡Tienes que apostar dinero!");
             return map;
         } else if (apuesta > 0) apuestaUsuario = apuesta;
-        else {
-            map.put("message", "Necesitas apostar creditos para participar!");
-            return map;
-        }
         if (credito == 0) {
             map.put("message", "¡Se acabó el crédito!");
             return map;
@@ -42,59 +33,53 @@ public class SlotService {
             map.put("message", "La apuesta es más grande que los créditos que tienes");
             return map;
         }
-        resultado = new String[]{"❓", "❓", "❓"};
-        resultadoUlt.clear();
+        arResult = new String[]{"❓", "❓", "❓"};
+        resultSlot.clear();
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                List<String> randomItem = new ArrayList<>(Arrays.asList(items));
-                for (int k = 0; k < items.length; k++) {
+                List<String> randomItem = new ArrayList<>(Arrays.asList(slot.getItems()));
+                for (int k = 0; k < slot.getItems().length; k++) {
                     int random = getRandomIndex(randomItem.size());
-                    if (j == 2 && k == items.length - 1) resultadoUlt.add(randomItem.get(random));
-                    resultado[i] += randomItem.get(random);
+                    if (j == 2 && k == slot.getItems().length - 1) resultSlot.add(randomItem.get(random));
+                    arResult[i] += randomItem.get(random);
                     randomItem.remove(random);
                 }
             }
         }
-
-        // Resetea todos los valores del Array a FALSE
-        Arrays.fill(isSpin, false);
         credito -= apuesta;
         int gains = checkwin(apuestaUsuario);
         if (gains > 0) map.put("message", "Has ganado " + gains + " créditos!");
         else map.put("message", "");
-        map.put("resultado", resultado);
+        map.put("resultado", arResult);
         map.put("ganancias", gains);
         credito += gains;
         map.put("creditos", credito);
-        map.put("total", resultadoUlt);
+        map.put("total", resultSlot);
+        userService.setCredito(credito, user);
 
         return map;
     }
 
-    public static Map<String, Object> spinColumn(Integer column, Integer apuesta, String emoji) {
+    /*public static Map<String, Object> spinColumn(Integer column, Integer apuesta, String emoji) {
         Map<String, Object> map = new HashMap<>();
         if (column != null) {
-            if (resultado[0] == null) {
+            if (arResult[0] == null) {
                 map.put("message", "No puedes girar una columna sin haber girado las tres");
                 return map;
             }
-            if (column < 0 || column >= resultado.length) {
+            if (column < 0 || column >= arResult.length) {
                 map.put("message", "La columna especificada no es válida");
-                return map;
-            }
-            if (isSpin[column]) {
-                map.put("message", "Esta columna ya ha sido movida solitariamente una vez");
                 return map;
             }
             while (true) {
                 String anotherFruit = "";
-                anotherFruit = items[getRandomIndex(items.length)];
+                anotherFruit = slot.getItems()[getRandomIndex(slot.getItems().length)];
                 if (emoji.equals(anotherFruit)) {
                     isSpin[column] = true;
                     break;
                 }
             }
-            resultado[column] = items[getRandomIndex(items.length)];
+            arResult[column] = slot.getItems()[getRandomIndex(slot.getItems().length)];
         } else {
             if (apuesta != null && apuesta > 0) apuestaUsuario = apuesta;
             else {
@@ -115,52 +100,40 @@ public class SlotService {
             // Resetea todos los valores del Array a FALSE
             Arrays.fill(isSpin, false);
             credito -= apuesta;
-            resultado = new String[3];
-            for (int i = 0; i < resultado.length; i++) {
-                resultado[i] = items[getRandomIndex(items.length)].repeat(3);
+            arResult = new String[3];
+            for (int i = 0; i < arResult.length; i++) {
+                arResult[i] = slot.getItems()[getRandomIndex(slot.getItems().length)].repeat(3);
             }
-            map.put("resultado", resultado);
+            map.put("resultado", arResult);
         }
         return map;
-    }
+    }*/
 
-    public int returnCredito() {
-        return credito;
+    public long returnCredito(User user) {
+        return user.getCoins();
     }
 
     public List<String> returnResultado() {
-        return resultadoUlt;
+        return resultSlot;
     }
 
-    private static int getRandomIndex(int length) {
+    private int getRandomIndex(int length) {
         return (int) (Math.random() * length);
     }
 
-    private static int checkwin(int apuesta) {
+    private int checkwin(int apuesta) {
         int gains = 0;
-        String resultado1 = resultadoUlt.get(0);
-        String resultado2 = resultadoUlt.get(1);
-        String resultado3 = resultadoUlt.get(2);
+        String resultado1 = resultSlot.get(0);
+        String resultado2 = resultSlot.get(1);
+        String resultado3 = resultSlot.get(2);
         if (resultado1.equals(resultado2) && resultado1.equals(resultado3)&& !resultado1.equals("❓")) {
-            for (int i = 0; i < items.length; i++) {
-                if (items[i].equals(resultado1)) {
-                    gains = apuesta * valor[i];
+            for (int i = 0; i < slot.getItems().length; i++) {
+                if (slot.getItems()[i].equals(resultado1)) {
+                    gains = apuesta * slot.getValor()[i];
                     return gains;
                 }
             }
         }
         return gains;
-    }
-
-    public void reset() {
-        credito = 10;
-        resultado = new String[3];
-    }
-
-    public String[] init() {
-        if (firstInit) {
-            credito = 10;
-        }
-        return new String[0];
     }
 }

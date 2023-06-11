@@ -2,7 +2,11 @@ package com.liceu.casino.controllers;
 
 import com.liceu.casino.forms.SpinAll;
 import com.liceu.casino.forms.SpinColumn;
+import com.liceu.casino.model.Slot;
+import com.liceu.casino.model.User;
 import com.liceu.casino.services.SlotService;
+import com.liceu.casino.services.TokenService;
+import com.liceu.casino.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
@@ -17,9 +21,18 @@ public class SlotController {
     @Autowired
     SlotService slotService;
 
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    TokenService tokenService;
+
     @GetMapping("/credito")
-    public int getCredito() {
-        return slotService.returnCredito();
+    public Map<String, Object> getCredito(@RequestHeader("Authorization") String token) {
+        User user = userService.findByEmail(tokenService.getUser(token));
+        Map<String, Object> map = new HashMap<>();
+        map.put("credito", user.getCoins());
+        return map;
     }
 
     @GetMapping("/resultado")
@@ -30,12 +43,13 @@ public class SlotController {
     }
 
     @PostMapping("/spin")
-    public Map<String, Object> spin(@RequestBody SpinAll request) {
+    public Map<String, Object> spin(@RequestBody SpinAll request, @RequestHeader("Authorization") String token) {
+        User user = userService.findByEmail(tokenService.getUser(token));
         int apuesta = request.getApuesta();
-        return SlotService.spin(apuesta);
+        return slotService.spin(apuesta, user);
     }
 
-    @PostMapping("/spinColumn")
+/*    @PostMapping("/spinColumn")
     public Map<String, Object> spinColumn(@RequestBody SpinColumn request) {
         Map<String, Object> map = new HashMap<>();
         int column = request.getColumn();
@@ -48,5 +62,5 @@ public class SlotController {
     public String reset() {
         slotService.reset();
         return "Reiniciado con Éxito!";
-    }
+    }*/
 }
