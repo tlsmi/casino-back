@@ -29,7 +29,7 @@ public class SlotController {
 
     @GetMapping("/credito")
     public Map<String, Object> getCredito(@RequestHeader("Authorization") String token) {
-        User user = userService.findByEmail(tokenService.getUser(token));
+        User user = userService.findByEmail(tokenService.getEmail(token));
         Map<String, Object> map = new HashMap<>();
         map.put("credito", user.getCoins());
         return map;
@@ -44,7 +44,7 @@ public class SlotController {
 
     @PostMapping("/spin")
     public Map<String, Object> spin(@RequestBody SpinAll request, @RequestHeader("Authorization") String token) {
-        User user = userService.findByEmail(tokenService.getUser(token));
+        User user = userService.findByEmail(tokenService.getEmail(token));
         int apuesta = request.getApuesta();
         return slotService.spin(apuesta, user);
     }
