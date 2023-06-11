@@ -4,8 +4,8 @@ import com.liceu.casino.DAO.UserDAO;
 import com.liceu.casino.DTO.ProfileDTO;
 import com.liceu.casino.forms.LoginForm;
 import com.liceu.casino.forms.ProfileForm;
-import com.liceu.casino.forms.RegisterForm;
 import com.liceu.casino.model.User;
+import com.liceu.casino.utils.FormValidations;
 import com.liceu.casino.utils.SHA512Encoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,9 @@ public class UserService {
     @Autowired
     UserDAO userdao;
     SHA512Encoder encoder;
-    public boolean signup(RegisterForm registerForm){
+
+    FormValidations validations;
+    public boolean signup(ProfileForm registerForm){
         System.out.println(registerForm);
         //existe un usuario con ese nombre o las contraseñas no coinciden?
         if (userdao.findByEmail(registerForm.getEmail()) != null) return false;
@@ -97,5 +99,25 @@ public class UserService {
 
     public void changePass(User user, String newPassword) {
         userdao.updatePass(user.getId(), encoder.encode(newPassword));
+    }
+
+    public boolean validateFormData(ProfileForm registerForm) {
+        if (validations.validateDNI(registerForm.getDni())){
+            System.out.println("true1");
+            if (validations.validatePassword(registerForm.getPassword())){
+                System.out.println("true1");
+
+                if (validations.validateBirthDate(registerForm.getBirthDate())){
+                    System.out.println("true1");
+
+                    if (validations.validateEmail(registerForm.getEmail())){
+                        System.out.println("true1");
+
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 }

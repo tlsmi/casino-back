@@ -56,9 +56,14 @@ public class UserController {
 
     @PostMapping("/signup")
     @CrossOrigin
-    public Map<String , String> signup(@RequestBody RegisterForm registerForm, HttpServletResponse response){
+    public Map<String , String> signup(@RequestBody ProfileForm profileForm, HttpServletResponse response){
         Map<String, String> map = new HashMap<>();
-        if (userService.signup(registerForm)) map.put("message", "Usuario creado correctamente");
+        if (!userService.validateFormData(profileForm)) {
+            map.put("message","No te pases de listo");
+            response.setStatus(400);
+            return map;
+        }
+        if (userService.signup(profileForm)) map.put("message", "Usuario creado correctamente");
         else{
             map.put("message", "Ya existe un usuario con ese correo");
             response.setStatus(400);
