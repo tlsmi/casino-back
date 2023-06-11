@@ -24,12 +24,12 @@ public class TokenService {
         return token;
     }
 
-    public String getEmail(String email) {
-        String user = JWT.require(Algorithm.HMAC512(tokenSecret.getBytes()))
+    public String getEmail(String token) {
+        String email = JWT.require(Algorithm.HMAC512(tokenSecret.getBytes()))
                 .build()
-                .verify(email)
+                .verify(token)
                 .getSubject();
-        return user;
+        return email;
     }
 
 }
