@@ -10,8 +10,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-
-    @Column(length = 9)
+    @Column(unique = true, length = 9)
     String dni;
     String name;
     String surname1;

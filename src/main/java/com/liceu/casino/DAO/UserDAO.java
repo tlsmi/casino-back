@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 @Transactional
 public interface UserDAO extends JpaRepository <User, String> {
-    List<User> findByEmail(String email);
+    User findByEmail(String email);
     List<User> findByDni(String dni);
 
     //modificar usuario
@@ -32,5 +32,9 @@ public interface UserDAO extends JpaRepository <User, String> {
     void updatePass(@Param("id") long id, @Param("password") String password);
 
     boolean existsByEmailAndPassword(String email, String encode);
+
+    @Modifying
+    @Query("UPDATE User SET coins = :coins WHERE email = :email")
+    void updateUser(@Param("coins") Long coins, @Param("email") String email);
 
 }
