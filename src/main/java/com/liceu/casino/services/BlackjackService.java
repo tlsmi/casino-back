@@ -1,8 +1,6 @@
 package com.liceu.casino.services;
 
-import com.liceu.casino.model.Card;
-import com.liceu.casino.model.Rank;
-import com.liceu.casino.model.Suit;
+import com.liceu.casino.model.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,6 +19,9 @@ public class BlackjackService {
     private List<Card> dealerHand;
     private Random random;
     private int apuesta;
+    private GameState gameState;
+    private Deal deal;
+    private Message message;
 
     public String start() {
         initializeDeck();
