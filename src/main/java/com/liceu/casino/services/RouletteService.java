@@ -17,7 +17,7 @@ public class RouletteService {
 
         Bet result = new Bet();
         int[] numAux = {num};
-        List<int[]> lista= new ArrayList<>();
+        List<int[]> lista = new ArrayList<>();
         lista.add(numAux);
         result.setNumber(lista);
         boolean isCol1 = false;
@@ -45,7 +45,7 @@ public class RouletteService {
             //Mira si el num es de los 18 primeros o no
             if (num > 18) {
                 result.setMitad(Collections.singletonList(new int[]{2}));
-            }else{
+            } else {
                 result.setMitad(Collections.singletonList(new int[]{1}));
             }
 
@@ -96,34 +96,31 @@ public class RouletteService {
 
     public Map<String, Object> getBalance(Bet result, Bet bet, String emailUser) {
 
-        Map<String,Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
 
-        if (bet.getTotal() == 0){
-            map.put("message","no has apostado nada");
-        }else{
-            int totalLeft = 0;
+        int totalLeft = 0;
 
-            if (bet.getPar() != null){
-                totalLeft += comparePar(result.getPar().get(0)[0], bet.getPar());
-            }
-            if (bet.getColor() != null){
-                totalLeft += compareColor((String) result.getColor().get(0)[0], bet.getColor());
-            }
-            if (bet.getMitad() != null){
-                totalLeft += compareInts2(result.getMitad().get(0)[0], bet.getMitad());
-            }
-            if (bet.getColumna() != null){
-                totalLeft += compareInts3(result.getColumna().get(0)[0], bet.getColumna());
-            }
-            if (bet.getDocena() != null){
-                totalLeft += compareInts3(result.getDocena().get(0)[0], bet.getDocena());
-            }
-            if (bet.getNumber() != null){
-                totalLeft += compareInts36(result.getNumber().get(0)[0], bet.getNumber());
-            }
-            map.put("balance",totalLeft);
-            map.put("message","ok");
+        if (bet.getPar().size() > 0) {
+            totalLeft += comparePar(result.getPar().get(0)[0], bet.getPar());
         }
+        if (bet.getColor().size() > 0) {
+            totalLeft += compareColor((String) result.getColor().get(0)[0], bet.getColor());
+        }
+        if (bet.getMitad().size() > 0) {
+            totalLeft += compareInts2(result.getMitad().get(0)[0], bet.getMitad());
+        }
+        if (bet.getColumna().size() > 0) {
+            totalLeft += compareInts3(result.getColumna().get(0)[0], bet.getColumna());
+        }
+        if (bet.getDocena().size() > 0) {
+            totalLeft += compareInts3(result.getDocena().get(0)[0], bet.getDocena());
+        }
+        if (bet.getNumber().size() > 0) {
+            totalLeft += compareInts36(result.getNumber().get(0)[0], bet.getNumber());
+        }
+        map.put("balance", totalLeft);
+        map.put("message", "ok");
+        userDAO.updateUser(userDAO.findByEmail(emailUser).getCoins() + totalLeft, emailUser);
         return map;
     }
 
@@ -131,8 +128,8 @@ public class RouletteService {
         int result = 0;
         for (Object[] objects : b1) {
             if (b == objects[0]) {
-                result += (int) objects[1];
-            }else{
+                result += (int) objects[1] * 2 - (int) objects[1];
+            } else {
                 result -= (int) objects[1];
             }
         }
@@ -144,8 +141,8 @@ public class RouletteService {
         int result = 0;
         for (Object[] strings : s1) {
             if (s.equals(strings[0])) {
-                result += (int) strings[1];
-            }else{
+                result += (int) strings[1] * 2 - (int) strings[1];
+            } else {
                 result -= (int) strings[1];
             }
         }
@@ -157,8 +154,8 @@ public class RouletteService {
         int result = 0;
         for (int[] ints : i1) {
             if (i == ints[0]) {
-                result += ints[1]*2;
-            }else{
+                result += ints[1] * 2 - ints[1];
+            } else {
                 result -= ints[1];
             }
         }
@@ -170,8 +167,8 @@ public class RouletteService {
         int result = 0;
         for (int[] ints : i1) {
             if (i == ints[0]) {
-                result += ints[1]*3;
-            }else{
+                result += ints[1] * 3 - ints[1];
+            } else {
                 result -= ints[1];
             }
         }
@@ -183,8 +180,8 @@ public class RouletteService {
         int result = 0;
         for (int[] ints : i1) {
             if (i == ints[0]) {
-                result += ints[1]*36;
-            }else{
+                result += ints[1] * 36 - ints[1];
+            } else {
                 result -= ints[1];
             }
         }

@@ -20,14 +20,14 @@ public class RuletaController {
 
     @PostMapping("/games/roulette")
     @CrossOrigin
-    public Object roulette(@RequestBody Bet bet){
-
-
+    public Object roulette(@RequestBody Bet bet,@RequestHeader("Authorization") String token){
+        token = token.split(" ")[1];
+        String email = tokenService.getEmail(token);
 
         Map<String,Object> map;
         int num = (int) Math.floor(Math.random() * 36);
         Bet result = ruletaService.getResult(num);
-        map = ruletaService.getBalance(result,bet,null);
+        map = ruletaService.getBalance(result,bet,email);
         map.put("n",num);
         return map;
     }
