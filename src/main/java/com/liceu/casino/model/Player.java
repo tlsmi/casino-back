@@ -39,4 +39,8 @@ public class Player {
     public void setScore(int score) {
         this.score = score;
     }
+
+    public void hit(Card card) {
+        this.hand.add(card);
+    }
 }

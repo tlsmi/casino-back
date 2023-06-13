@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/games/blackjack1")
-@CrossOrigin
+@CrossOrigin (origins = "http://localhost:3000")
 public class BlackJackController1 {
     @Autowired
     BlackJackService1 blackJackService;
@@ -26,7 +26,7 @@ public class BlackJackController1 {
 
     @PostMapping("/start")
     public ResponseEntity<?> startGame(@RequestBody BetRequest betRequest, @RequestHeader("Authorization") String token) {
-        User user = userService.findByEmail(tokenService.getUser(token));
+        User user = userService.findByEmail(tokenService.getEmail(token));
         return blackJackService.start(betRequest, user);
     }
 }

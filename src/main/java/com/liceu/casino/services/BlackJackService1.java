@@ -61,7 +61,7 @@ public class BlackJackService1 {
         calculateScore(userCards, player);
         calculateScore(dealerCards, dealer);
 
-        GameResponse gameResponse = new GameResponse(credito, betApuesta, player, dealer);
+        GameResponse gameResponse = new GameResponse(credito, betApuesta, player, dealer, GameState.USER_TURN, Message.HIT_STAND);
 
         //return null;
         return ResponseEntity.ok(gameResponse);

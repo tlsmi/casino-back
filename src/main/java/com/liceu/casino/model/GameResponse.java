@@ -7,13 +7,17 @@ public class GameResponse {
     private int betAmount;
     private Player player;
     private Player dealer;
+    private GameState gameState;
+    private Message message;
 
     // Constructor
-    public GameResponse(double balance, int betAmount, Player player, Player dealer) {
+    public GameResponse(double balance, int betAmount, Player player, Player dealer, GameState gameState, Message message) {
         this.balance = balance;
         this.betAmount = betAmount;
         this.player = player;
         this.dealer = dealer;
+        this.gameState = gameState;
+        this.message = message;
     }
 
     public double getBalance() {
@@ -46,5 +50,21 @@ public class GameResponse {
 
     public void setDealer(Player dealer) {
         this.dealer = dealer;
+    }
+
+    public GameState getGameState() {
+        return gameState;
+    }
+
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
+    }
+
+    public Message getMessage() {
+        return message;
+    }
+
+    public void setMessage(Message message) {
+        this.message = message;
     }
 }
