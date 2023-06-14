@@ -11,9 +11,9 @@ public enum Rank {
     OCHO(8),
     NUEVE(9),
     DIEZ(10),
-    JOTA(10),
-    CU(10),
-    CA(10);
+    J(10),
+    Q(10),
+    K(10);
 
     private int value;
 

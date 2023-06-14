@@ -104,4 +104,13 @@ public class BlackJackService1 {
         }
         player.setScore(score);
     }
+
+    public ResponseEntity<?> hit() {
+        if (deck == null) return ResponseEntity.badRequest().body("Has de iniciar el juego antes!");
+
+        Card newCard = drawCard();
+        player.hit(newCard);
+
+        return ResponseEntity.ok(player);
+    }
 }

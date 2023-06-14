@@ -3,10 +3,12 @@ package com.liceu.casino.model;
 public class Card {
     private Rank rank;
     private Suit suit;
+    private int score;
 
     public Card(Rank rank, Suit suit) {
         this.rank = rank;
         this.suit = suit;
+        this.score = rank.getValue();
     }
 
     public Rank getRank() {
@@ -15,6 +17,10 @@ public class Card {
 
     public Suit getPalo() {
         return suit;
+    }
+
+    public int geetScore() {
+        return score;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.liceu.casino.controllers;
 
 import com.liceu.casino.model.BetRequest;
+import com.liceu.casino.model.GameRequest;
 import com.liceu.casino.model.GameResponse;
 import com.liceu.casino.model.User;
 import com.liceu.casino.services.BlackJackService1;
@@ -28,5 +29,12 @@ public class BlackJackController1 {
     public ResponseEntity<?> startGame(@RequestBody BetRequest betRequest, @RequestHeader("Authorization") String token) {
         User user = userService.findByEmail(tokenService.getEmail(token));
         return blackJackService.start(betRequest, user);
+    }
+
+    @PostMapping("/hit")
+    public ResponseEntity<?> hit(@RequestHeader("Authorization") String token) {
+        if (token == null) return ResponseEntity.badRequest().body("Inicia Sesión!");
+        // Lógica de recibir carta
+        return blackJackService.hit();
     }
 }
