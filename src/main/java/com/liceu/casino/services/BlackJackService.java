@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Random;
 
 @Service
-public class BlackJackService1 {
+public class BlackJackService {
     @Autowired
     UserService userService;
 
@@ -61,7 +61,7 @@ public class BlackJackService1 {
         calculateScore(userCards, player);
         calculateScore(dealerCards, dealer);
 
-        GameResponse gameResponse = new GameResponse(credito, betApuesta, player, dealer, GameState.USER_TURN, Message.HIT_STAND);
+        GameResponse gameResponse = new GameResponse(credito, betApuesta, player, dealer);
 
         //return null;
         return ResponseEntity.ok(gameResponse);
@@ -112,5 +112,14 @@ public class BlackJackService1 {
         player.hit(newCard);
 
         return ResponseEntity.ok(player);
+    }
+
+    public ResponseEntity<?> stand() {
+        if (deck == null) return ResponseEntity.badRequest().body("Has de iniciar el juego antes!");
+
+        Card newCard = drawCard();
+        dealer.hit(newCard);
+
+        return ResponseEntity.ok(dealer);
     }
 }
