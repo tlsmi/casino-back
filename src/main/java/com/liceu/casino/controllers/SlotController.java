@@ -27,14 +27,6 @@ public class SlotController {
     @Autowired
     TokenService tokenService;
 
-    @GetMapping("/credito")
-    public Map<String, Object> getCredito(@RequestHeader("Authorization") String token) {
-        User user = userService.findByEmail(tokenService.getEmail(token));
-        Map<String, Object> map = new HashMap<>();
-        map.put("credito", user.getCoins());
-        return map;
-    }
-
     @GetMapping("/resultado")
     public Map<String, Object> getResultado() {
         Map<String, Object> map = new HashMap<>();
@@ -49,18 +41,4 @@ public class SlotController {
         return slotService.spin(apuesta, user);
     }
 
-/*    @PostMapping("/spinColumn")
-    public Map<String, Object> spinColumn(@RequestBody SpinColumn request) {
-        Map<String, Object> map = new HashMap<>();
-        int column = request.getColumn();
-        String emoji = request.getEmoji();
-        int apuesta = request.getApuesta();
-        return SlotService.spinColumn(column, apuesta, emoji);
-    }
-
-    @PostMapping("/reset")
-    public String reset() {
-        slotService.reset();
-        return "Reiniciado con Éxito!";
-    }*/
 }
