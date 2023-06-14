@@ -25,11 +25,11 @@ public class TokenService {
     }
 
     public String getEmail(String token) {
-        String user = JWT.require(Algorithm.HMAC512(tokenSecret.getBytes()))
+        String email = JWT.require(Algorithm.HMAC512(tokenSecret.getBytes()))
                 .build()
                 .verify(token)
                 .getSubject();
-        return user;
+        return email;
     }
 
 }
