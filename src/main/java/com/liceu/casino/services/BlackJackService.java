@@ -38,6 +38,7 @@ public class BlackJackService {
 
         // Restar la apuesta al credito del usuario
         credito -= betApuesta;
+        userService.setCredito(credito, user);
 
         player = new Player(user.getName());
         dealer = new Player("Miguel");
@@ -63,7 +64,6 @@ public class BlackJackService {
 
         GameResponse gameResponse = new GameResponse(credito, betApuesta, player, dealer);
 
-        //return null;
         return ResponseEntity.ok(gameResponse);
     }
 
@@ -121,5 +121,11 @@ public class BlackJackService {
         dealer.hit(newCard);
 
         return ResponseEntity.ok(dealer);
+    }
+
+    public ResponseEntity<?> win(BetResponse response, User user) {
+        if (response.getResultado().equals("WIN")) userService.setCredito(response.getApuesta() * 2L + credito, user);
+        else if (response.getResultado().equals("TIE")) userService.setCredito(response.getApuesta() + credito, user);
+        return ResponseEntity.ok(credito);
     }
 }

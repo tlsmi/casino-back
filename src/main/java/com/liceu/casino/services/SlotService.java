@@ -60,59 +60,6 @@ public class SlotService {
         return map;
     }
 
-    /*public static Map<String, Object> spinColumn(Integer column, Integer apuesta, String emoji) {
-        Map<String, Object> map = new HashMap<>();
-        if (column != null) {
-            if (arResult[0] == null) {
-                map.put("message", "No puedes girar una columna sin haber girado las tres");
-                return map;
-            }
-            if (column < 0 || column >= arResult.length) {
-                map.put("message", "La columna especificada no es válida");
-                return map;
-            }
-            while (true) {
-                String anotherFruit = "";
-                anotherFruit = slot.getItems()[getRandomIndex(slot.getItems().length)];
-                if (emoji.equals(anotherFruit)) {
-                    isSpin[column] = true;
-                    break;
-                }
-            }
-            arResult[column] = slot.getItems()[getRandomIndex(slot.getItems().length)];
-        } else {
-            if (apuesta != null && apuesta > 0) apuestaUsuario = apuesta;
-            else {
-                map.put("message", "Necesitas apostar creditos para participar!");
-                return map;
-            }
-            if (credito == 0) {
-                map.put("message", "¡Se acabó el crédito!");
-                return map;
-            }
-            if (apuesta > credito) {
-                map.put("message", "La apuesta es más grande que los créditos que tienes");
-                return map;
-            } else if (apuesta == 0) {
-                map.put("message", "¡Tienes que apostar dinero!");
-                return map;
-            }
-            // Resetea todos los valores del Array a FALSE
-            Arrays.fill(isSpin, false);
-            credito -= apuesta;
-            arResult = new String[3];
-            for (int i = 0; i < arResult.length; i++) {
-                arResult[i] = slot.getItems()[getRandomIndex(slot.getItems().length)].repeat(3);
-            }
-            map.put("resultado", arResult);
-        }
-        return map;
-    }*/
-
-    public long returnCredito(User user) {
-        return user.getCoins();
-    }
-
     public List<String> returnResultado() {
         return resultSlot;
     }

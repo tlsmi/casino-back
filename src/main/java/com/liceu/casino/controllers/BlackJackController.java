@@ -1,6 +1,7 @@
 package com.liceu.casino.controllers;
 
 import com.liceu.casino.model.BetRequest;
+import com.liceu.casino.model.BetResponse;
 import com.liceu.casino.model.User;
 import com.liceu.casino.services.BlackJackService;
 import com.liceu.casino.services.TokenService;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/games/blackjack1")
+@RequestMapping("/games/blackjack")
 @CrossOrigin (origins = "http://localhost:3000")
 public class BlackJackController {
     @Autowired
@@ -40,5 +41,12 @@ public class BlackJackController {
     public ResponseEntity<?> stand(@RequestHeader("Authorization") String token) {
         if (token == null) return ResponseEntity.badRequest().body("Inicia Sesion!");
         return blackJackService.stand();
+    }
+
+    @PostMapping("/win")
+    public ResponseEntity<?> win(@RequestHeader("Authorization") String token, @RequestBody BetResponse response) {
+        if (token == null) return ResponseEntity.badRequest().body("Inicia Sesion!");
+        User user = userService.findByEmail(tokenService.getEmail(token));
+        return blackJackService.win(response, user);
     }
 }
