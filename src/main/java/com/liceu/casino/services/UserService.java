@@ -21,7 +21,7 @@ public class UserService {
     FormValidations validations;
     public boolean signup(ProfileForm registerForm){
         System.out.println(registerForm);
-        //existe un usuario con ese nombre o las contraseñas no coinciden?
+        //existe un usuario con ese nombre?
         if (userdao.findByEmail(registerForm.getEmail()) != null) return false;
         //crea y guarda el usuario
         User user = new User(
@@ -41,7 +41,7 @@ public class UserService {
 
     public User login(LoginForm loginForm) {
         //si no encuentra usuario con ese email peta
-        if (userdao.findByEmail(loginForm.getEmail()) == null) return null;
+        if (userdao.findByEmail(loginForm.getEmail())==null) return null;
 
         //crea usuario asociado a ese mail
         User u = userdao.findByEmail(loginForm.getEmail());

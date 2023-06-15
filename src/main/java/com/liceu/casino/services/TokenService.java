@@ -16,9 +16,9 @@ public class TokenService {
     @Value("${token.expiration}")
     int tokenExpiration;
 
-    public String newToken(String user) {
+    public String newToken(String email) {
         String token = JWT.create()
-                .withSubject(user)
+                .withSubject(email)
                 .withExpiresAt(new Date(System.currentTimeMillis() + tokenExpiration))
                 .sign(Algorithm.HMAC512(tokenSecret.getBytes(StandardCharsets.UTF_8)));
         return token;

@@ -6,19 +6,24 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
+
     @Column(unique = true, length = 9)
-    String dni;
-    String name;
-    String surname1;
-    String surname2;
+    private String dni;
+    private String name;
+    private String surname1;
+    private String surname2;
     @Column(unique = true)
-    String email;
-    String birthDate;
+    private String email;
+    private String birthDate;
     @JsonIgnore
-    String password;
+    private String password;
     //    List<Card> cards;
-    Long coins;
+    private long coins;
+
+    @OneToMany(mappedBy = "emailUser", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Bet> bets;
+
     public User(){
     }
     public User(String dni, String name, String surname1, String surname2, String email, String birthDate, String password) {
@@ -37,6 +42,15 @@ public class User {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public List<Bet> getBets() {
+        return bets;
+    }
+
+    public void setBets(List<Bet> bets) {
+        this.bets = bets;
+    }
+
     public String getDni() {
         return dni;
     }
@@ -79,9 +93,11 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
     public Long getCoins() {
         return coins;
     }
+
     public void setCoins(Long coins) {
         this.coins = coins;
     }
