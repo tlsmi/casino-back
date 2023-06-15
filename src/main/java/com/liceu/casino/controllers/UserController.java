@@ -142,18 +142,6 @@ public class UserController {
     @GetMapping("/credito")
     @CrossOrigin(origins = "http://localhost:3000")
     public Map<String, Object> getCredito(@RequestHeader("Authorization") String token) {
-        token = token.split(" ")[1];
-        User user = userService.findByEmail(tokenService.getEmail(token));
-        Map<String, Object> map = new HashMap<>();
-        map.put("credito", user.getCoins());
-        return map;
-    }
-
-
-
-    @GetMapping("/credito")
-    @CrossOrigin(origins = "http://localhost:3000")
-    public Map<String, Object> getCredito(@RequestHeader("Authorization") String token) {
         User user = userService.findByEmail(tokenService.getEmail(token));
         Map<String, Object> map = new HashMap<>();
         map.put("credito", user.getCoins());
