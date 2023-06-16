@@ -80,6 +80,7 @@ public class UserController {
             return map;
         }
         userService.updateProfile(user.getId(), profileForm);
+
         // Actualizar token
         token = tokenService.newToken(profileForm.getEmail());
 
@@ -100,13 +101,13 @@ public class UserController {
         Map<String, Object> map = new HashMap<>();
 
         if (passwordForm.getNewPassword().equals(passwordForm.getCurrentPassword())) {
-            map.put("message", "Tu contraseña es igual que la anterior");
+            map.put("message", "Tu contraseña es igual que la anterior!");
             response.setStatus(400);
         } else if (oldPassValidation) {
             userService.changePass(user, passwordForm.getNewPassword());
-            map.put("message", "Contraseña cambiada correctamente");
+            map.put("message", "Contraseña cambiada correctamente!");
         } else {
-            map.put("message", "contraseña actual incorrecta");
+            map.put("message", "Contraseña actual incorrecta!");
             response.setStatus(403);
         }
 
@@ -118,8 +119,7 @@ public class UserController {
     @GetMapping("/getprofile")
     public Object getprofile(@RequestHeader("Authorization") String token) {
         User user = userService.findByEmail(tokenService.getEmail(token.replace("Bearer ", "")));
-        ProfileDTO profile = userService.newProfile(user);
-        return profile;
+        return userService.newProfile(user);
     }
 
     @GetMapping("/credito")
@@ -147,9 +147,9 @@ public class UserController {
         }
         if (userLogged.getEmail().equals(user.getEmail())) {
             userService.deleteUser(userLogged);
-            map.put("message","ok");
+            map.put("message","Usuario borrado correctamente!");
         } else {
-            map.put("message", "Error al borrar usuario, Discrepancia entre emails");
+            map.put("message", "Error al borrar usuario, Discrepancia entre emails!");
         }
         return map;
     }
