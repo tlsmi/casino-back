@@ -11,7 +11,7 @@ import java.util.List;
 @Transactional
 public interface UserDAO extends JpaRepository <User, String> {
     User findByEmail(String email);
-    List<User> findByDni(String dni);
+    User findByDni(String dni);
 
     //modificar usuario
     @Modifying
