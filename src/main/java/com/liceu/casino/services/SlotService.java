@@ -12,6 +12,7 @@ import java.util.*;
 public class SlotService {
     @Autowired
     UserService userService;
+
     private int apuestaUsuario = 0;
     private List<String> resultSlot = new ArrayList<>();
     private Slot slot = new Slot();
