@@ -30,21 +30,16 @@ public class UserController {
         Map<String, Object> map = new HashMap<>();
         User user = userService.login(loginForm);
         if (user == null) {
-            System.out.println("***Credenciales de inicio de sesión incorrectos***");
             map.put("message", "Credenciales de inicio de sesión incorrectos");
             response.setStatus(400);
             return map;
         }
-        System.out.println("***Sesión iniciada correctamente***");
 
-        //crear perfil
+        // Crear perfil
         ProfileDTO profile = userService.newProfile(user);
 
-        //token a partir del usuario encontrado
+        // Token a partir del usuario encontrado
         String token = tokenService.newToken(user.getEmail());
-
-        System.out.println("Esto es el token: " + token);
-        System.out.println("Esto deberia ser el correo " + tokenService.getEmail(token));
 
         map.put("token", token);
         map.put("user", profile);
@@ -63,19 +58,19 @@ public class UserController {
     }
 
     @PutMapping("/profile")
-    public Map<String, Object> updateProfile(HttpServletRequest request, HttpServletResponse response,
+    public Map<String, Object> updateProfile(HttpServletResponse response,
                                              @RequestHeader("Authorization") String token,
                                              @RequestBody ProfileForm profileForm) {
         Map<String, Object> map = new HashMap<>();
         String email = tokenService.getEmail(token.replace("Bearer ", ""));
         User user = userService.findByEmail(email);
-        if (!userService.validatePassword(user.getPassword(), profileForm.getPassword())) {
-            map.put("message", "Contraseña incorrecta");
+        if (user == null) {
+            map.put("message", "No existe un usuario con ese correo");
             response.setStatus(400);
             return map;
         }
-        if (user == null) {
-            map.put("message", "No existe un usuario con ese correo");
+        if (!userService.validatePassword(user.getPassword(), profileForm.getPassword())) {
+            map.put("message", "Contraseña incorrecta");
             response.setStatus(400);
             return map;
         }
@@ -85,7 +80,7 @@ public class UserController {
             return map;
         }
         userService.updateProfile(user.getId(), profileForm);
-        //actualizar token
+        // Actualizar token
         token = tokenService.newToken(profileForm.getEmail());
 
         map.put("token", token);
