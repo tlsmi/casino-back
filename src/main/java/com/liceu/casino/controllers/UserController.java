@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
+@CrossOrigin
 public class UserController {
 
     @Autowired
@@ -25,7 +26,6 @@ public class UserController {
     TokenService tokenService;
 
     @PostMapping("/login")
-    @CrossOrigin
     public Map<String, Object> login(@RequestBody LoginForm loginForm, HttpServletResponse response) {
         Map<String, Object> map = new HashMap<>();
         User user = userService.login(loginForm);
@@ -52,7 +52,6 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    @CrossOrigin
     public Map<String, String> signup(@RequestBody ProfileForm profileForm, HttpServletResponse response) {
         Map<String, String> map = new HashMap<>();
         String message = userService.validateFormData(profileForm);
@@ -64,7 +63,6 @@ public class UserController {
     }
 
     @PutMapping("/profile")
-    @CrossOrigin
     public Map<String, Object> updateProfile(HttpServletRequest request, HttpServletResponse response,
                                              @RequestHeader("Authorization") String token,
                                              @RequestBody ProfileForm profileForm) {
@@ -97,7 +95,6 @@ public class UserController {
     }
 
     @PutMapping("/profile/password")
-    @CrossOrigin
     public Map<String, Object> updatePassword(HttpServletRequest request, HttpServletResponse response,
                                               @RequestHeader("Authorization") String token,
                                               @RequestBody PasswordForm passwordForm) {
@@ -124,7 +121,6 @@ public class UserController {
 
 
     @GetMapping("/getprofile")
-    @CrossOrigin
     public Object getprofile(@RequestHeader("Authorization") String token) {
         User user = userService.findByEmail(tokenService.getEmail(token.replace("Bearer ", "")));
         ProfileDTO profile = userService.newProfile(user);
@@ -132,7 +128,6 @@ public class UserController {
     }
 
     @GetMapping("/credito")
-    @CrossOrigin(origins = "http://localhost:3000")
     public Map<String, Object> getCredito(@RequestHeader("Authorization") String token) {
         User user = userService.findByEmail(tokenService.getEmail(token));
         Map<String, Object> map = new HashMap<>();
@@ -141,7 +136,6 @@ public class UserController {
     }
 
     @DeleteMapping("/deleteUser")
-    @CrossOrigin
     public Map<String, String> updatePassword(HttpServletResponse response, @RequestBody LoginForm loginForm , @RequestHeader("Authorization") String token) {
 
         Map<String, String> map = new HashMap<>();
