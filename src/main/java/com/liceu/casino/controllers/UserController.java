@@ -130,17 +130,24 @@ public class UserController {
         return map;
     }
 
+    @PostMapping("/buy/{coins}")
+    public Map<String , String> buy(@PathVariable String coins, @RequestHeader("Authorization") String token){
+        Map<String, String> map = new HashMap<>();
+        User user = userService.findByEmail(tokenService.getEmail(token.replace("Bearer ","")));
+        int coinsInt = Integer.parseInt(coins);
+        userService.buyCoins(user, coinsInt);
+        return map;
+    }
+
     @DeleteMapping("/deleteUser")
     public Map<String, String> updatePassword(HttpServletResponse response, @RequestBody LoginForm loginForm , @RequestHeader("Authorization") String token) {
 
         Map<String, String> map = new HashMap<>();
-        System.out.println("Token1: " + token);
-        System.out.println("Token2: " + token.replace("Bearer ", ""));
         User userLogged = userService.findByEmail(tokenService.getEmail(token.replace("Bearer ", "")));
 
         User user = userService.login(loginForm);
         if (user == null) {
-            System.out.println("***Credenciales de inicio de sesión incorrectos***");
+
             map.put("message", "Credenciales de inicio de sesión incorrectos");
             response.setStatus(400);
             return map;

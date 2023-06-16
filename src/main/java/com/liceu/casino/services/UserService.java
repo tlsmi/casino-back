@@ -114,4 +114,11 @@ public class UserService {
     public void deleteUser(User user) {
         userdao.deleteUser(user.getId());
     }
+
+    public void buyCoins(User user, int coinsInt) {
+        Long currentCoins = userdao.getUserCoins(user.getId());
+        System.out.println("monedas actuales" + currentCoins);
+        currentCoins = currentCoins += coinsInt;
+        userdao.saveCoinsByUserId(currentCoins, user.getId());
+    }
 }
