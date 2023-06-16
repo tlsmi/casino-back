@@ -10,13 +10,11 @@ import com.liceu.casino.services.TokenService;
 import com.liceu.casino.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.apache.el.parser.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 @RestController
 public class UserController {
@@ -138,6 +136,17 @@ public class UserController {
         ProfileDTO profile = userService.newProfile(user);
         return profile;
     }
+
+    @PostMapping("/buy/{coins}")
+    @CrossOrigin
+    public Map<String , String> buy(@PathVariable String coins, @RequestHeader("Authorization") String token){
+        Map<String, String> map = new HashMap<>();
+        User user = userService.getUserByEmail(tokenService.getEmail(token.replace("Bearer ","")));
+        int coinsInt = Integer.parseInt(coins);
+        userService.buyCoins(user, coinsInt);
+        return map;
+    }
+
 
 
 

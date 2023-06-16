@@ -32,5 +32,9 @@ public interface UserDAO extends JpaRepository <User, String> {
     void updatePass(@Param("id") long id, @Param("password") String password);
 
     boolean existsByEmailAndPassword(String email, String encode);
-
+    @Query("SELECT u.coins FROM User u WHERE u.id = :userId")
+    Long getUserCoins(Long userId);
+    @Modifying
+    @Query("update User u set u.coins = :currentCoins where u.id = :id")
+    void saveCoinsByUserId(@Param("currentCoins") Long currentCoins, @Param("id") long id);
 }
