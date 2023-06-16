@@ -1,9 +1,12 @@
 package com.liceu.casino.utils;
 
+import org.springframework.stereotype.Service;
+
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 
+@Service
 public class SHA512Encoder {
     public String encode(String input) {
         String toReturn = null;

@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.List;
 @Transactional
 public interface UserDAO extends JpaRepository <User, String> {
     User findByEmail(String email);
@@ -37,7 +36,7 @@ public interface UserDAO extends JpaRepository <User, String> {
     // Modificar Monedas
     @Modifying
     @Query("UPDATE User SET coins = :coins WHERE email = :email")
-    void updateUser(@Param("coins") Long coins, @Param("email") String email);
+    void updateCoinsByEmail(@Param("coins") Long coins, @Param("email") String email);
 
     // Eliminar Usuario
     @Modifying

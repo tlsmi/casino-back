@@ -120,7 +120,7 @@ public class RouletteService {
         }
         map.put("balance", totalLeft);
         map.put("message", "ok");
-        userDAO.updateUser(userDAO.findByEmail(emailUser).getCoins() + totalLeft, emailUser);
+        userDAO.updateCoinsByEmail(userDAO.findByEmail(emailUser).getCoins() + totalLeft, emailUser);
         return map;
     }
 

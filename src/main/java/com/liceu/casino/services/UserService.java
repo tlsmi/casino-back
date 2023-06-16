@@ -56,7 +56,7 @@ public class UserService {
     }
 
     public void setCredito(long credito, User user) {
-        userdao.updateUser(credito, user.getEmail());
+        userdao.updateCoinsByEmail(credito, user.getEmail());
     }
 
     public ProfileDTO newProfile(User user) {
