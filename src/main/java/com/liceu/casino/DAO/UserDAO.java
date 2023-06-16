@@ -13,7 +13,7 @@ public interface UserDAO extends JpaRepository <User, String> {
     User findByEmail(String email);
     User findByDni(String dni);
 
-    //modificar usuario
+    // Modificar Usuario
     @Modifying
     @Query("update User u set u.name = :name, u.email = :email, u.surname1 = :surname1, " +
             "u.surname2 = :surname2, u.dni = :dni, u.birthDate = :birthDate where u.id = :id")
@@ -27,16 +27,19 @@ public interface UserDAO extends JpaRepository <User, String> {
             @Param("birthDate") String birthDate
     );
 
+    // Modificar Contraseña
     @Modifying
     @Query("update User u set u.password = :password where u.id = :id")
     void updatePass(@Param("id") long id, @Param("password") String password);
 
     boolean existsByEmailAndPassword(String email, String encode);
 
+    // Modificar Monedas
     @Modifying
     @Query("UPDATE User SET coins = :coins WHERE email = :email")
     void updateUser(@Param("coins") Long coins, @Param("email") String email);
 
+    // Eliminar Usuario
     @Modifying
     @Query("DELETE User WHERE id = :id")
     void deleteUser(@Param("id") Long id);

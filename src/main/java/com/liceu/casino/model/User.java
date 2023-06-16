@@ -101,17 +101,4 @@ public class User {
     public void setCoins(Long coins) {
         this.coins = coins;
     }
-    @Override
-    public String toString() {
-        return "User{" +
-                "dni='" + dni + '\'' +
-                ", name='" + name + '\'' +
-                ", surname1='" + surname1 + '\'' +
-                ", surname2='" + surname2 + '\'' +
-                ", email='" + email + '\'' +
-                ", birthDate='" + birthDate + '\'' +
-                ", password='" + password + '\'' +
-                ", coins=" + coins +
-                '}';
-    }
 }

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/games/blackjack")
-@CrossOrigin (origins = "http://localhost:3000")
+@CrossOrigin
 public class BlackJackController {
     @Autowired
     BlackJackService blackJackService;

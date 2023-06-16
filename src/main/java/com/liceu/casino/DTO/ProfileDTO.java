@@ -1,10 +1,5 @@
 package com.liceu.casino.DTO;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Column;
-
-import java.math.BigInteger;
-
 public class ProfileDTO {
     String dni;
     String name;

@@ -5,7 +5,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 
 public class SHA512Encoder {
-    public static String encode(String input) {
+    public String encode(String input) {
         String toReturn = null;
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-512");

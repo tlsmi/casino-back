@@ -5,10 +5,6 @@ import com.liceu.casino.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 @Service
 public class FormValidations {
 
@@ -17,11 +13,7 @@ public class FormValidations {
 
     public boolean repetidoDNI(String dni) {
         User user = userDAO.findByDni(dni);
-        if (user != null) {
-            return true;
-        } else {
-            return false;
-        }
+        return user != null;
     }
 
 }

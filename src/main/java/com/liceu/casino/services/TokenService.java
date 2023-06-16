@@ -17,19 +17,17 @@ public class TokenService {
     int tokenExpiration;
 
     public String newToken(String email) {
-        String token = JWT.create()
+        return JWT.create()
                 .withSubject(email)
                 .withExpiresAt(new Date(System.currentTimeMillis() + tokenExpiration))
                 .sign(Algorithm.HMAC512(tokenSecret.getBytes(StandardCharsets.UTF_8)));
-        return token;
     }
 
     public String getEmail(String token) {
-        String email = JWT.require(Algorithm.HMAC512(tokenSecret.getBytes()))
+        return JWT.require(Algorithm.HMAC512(tokenSecret.getBytes()))
                 .build()
                 .verify(token)
                 .getSubject();
-        return email;
     }
 
 }

@@ -29,10 +29,10 @@ public class RouletteService {
 
         if (num != 0) {
 
-            //Mira si el num es par
+            // Mira si el num es par
             result.setPar(Collections.singletonList(new Object[]{num % 2 == 0}));
 
-            //Mira si el numero esta entre los rojos
+            // Mira si el numero esta entre los rojos
             for (int n : rojos) {
                 if (n != num) {
                     result.setColor(Collections.singletonList(new String[]{"negro"}));
@@ -42,14 +42,14 @@ public class RouletteService {
                 }
             }
 
-            //Mira si el num es de los 18 primeros o no
+            // Mira si el num es de los 18 primeros o no
             if (num > 18) {
                 result.setMitad(Collections.singletonList(new int[]{2}));
             } else {
                 result.setMitad(Collections.singletonList(new int[]{1}));
             }
 
-            //Mira si esta en la columna 1
+            // Mira si esta en la columna 1
             for (int n : columna1) {
                 if (n == num) {
                     result.setColumna(Collections.singletonList(new int[]{1}));
@@ -57,7 +57,7 @@ public class RouletteService {
             }
 
 
-            //Mira si esta en la columna 2 y sino lo pone en la 3
+            // Mira si esta en la columna 2 y sino lo pone en la 3
             for (int n : columna1) {
                 if (n == num) {
                     result.setColumna(Collections.singletonList(new int[]{1}));
@@ -76,7 +76,7 @@ public class RouletteService {
                 result.setColumna(Collections.singletonList(new int[]{3}));
             }
 
-            //Mira en que docena esta el numero
+            // Mira en que docena esta el numero
             if (num < 13) {
                 result.setDocena(Collections.singletonList(new int[]{1}));
             } else if (num > 24) {

@@ -75,16 +75,4 @@ public class ProfileForm {
     public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
     }
-
-    @Override
-    public String toString() {
-        return "ProfileForm{" +
-                "dni='" + dni + '\'' +
-                ", name='" + name + '\'' +
-                ", surname1='" + surname1 + '\'' +
-                ", surname2='" + surname2 + '\'' +
-                ", email='" + email + '\'' +
-                ", birthDate='" + birthDate + '\'' +
-                '}';
-    }
 }

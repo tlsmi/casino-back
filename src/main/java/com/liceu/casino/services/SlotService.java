@@ -12,14 +12,12 @@ import java.util.*;
 public class SlotService {
     @Autowired
     UserService userService;
-    private long credito;
-    private String[] arResult;
     private int apuestaUsuario = 0;
     private List<String> resultSlot = new ArrayList<>();
     private Slot slot = new Slot();
 
     public Map<String, Object> spin(Integer apuesta, User user) {
-        credito = user.getCoins();
+        long credito = user.getCoins();
         Map<String, Object> map = new HashMap<>();
         if (apuesta == 0) {
             map.put("message", "¡Tienes que apostar dinero!");
@@ -33,7 +31,7 @@ public class SlotService {
             map.put("message", "La apuesta es más grande que los créditos que tienes");
             return map;
         }
-        arResult = new String[]{"❓", "❓", "❓"};
+        String[] arResult = new String[]{"❓", "❓", "❓"};
         resultSlot.clear();
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -50,9 +48,11 @@ public class SlotService {
         int gains = checkwin(apuestaUsuario);
         if (gains > 0) map.put("message", "Has ganado " + gains + " créditos!");
         else map.put("message", "");
+
         map.put("resultado", arResult);
         map.put("ganancias", gains);
         credito += gains;
+
         map.put("creditos", credito);
         map.put("total", resultSlot);
         userService.setCredito(credito, user);

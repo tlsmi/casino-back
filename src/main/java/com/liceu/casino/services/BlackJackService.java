@@ -14,13 +14,11 @@ public class BlackJackService {
     @Autowired
     UserService userService;
 
-    private final int BLACKJACK_VALUE = 21;
     private long credito;
     private Player player;
     private Player dealer;
     private List<Card> deck;
     private Random random;
-    private int rounds;
 
     public ResponseEntity<?> start(BetRequest betRequest, User user) {
         credito = user.getCoins();
@@ -49,8 +47,6 @@ public class BlackJackService {
         List<Card> userCards = new ArrayList<>();
         List<Card> dealerCards = new ArrayList<>();
 
-        if (rounds >= 4) initializeDeck();
-
         userCards.add(drawCard());
         userCards.add(drawCard());
         player.setHand(userCards);
@@ -59,14 +55,12 @@ public class BlackJackService {
         dealerCards.add(drawCard());
         dealer.setHand(dealerCards);
 
-        calculateScore(userCards, player);
-        calculateScore(dealerCards, dealer);
-
         GameResponse gameResponse = new GameResponse(credito, betApuesta, player, dealer);
 
         return ResponseEntity.ok(gameResponse);
     }
 
+    // En cada ronda, se inicializará la baraja con todas las cartas
     private void initializeDeck() {
         deck = new ArrayList<>();
         for (Suit suit : Suit.values()) {
@@ -76,33 +70,12 @@ public class BlackJackService {
         }
     }
 
+    // Robar carta
     private Card drawCard() {
         int index = random.nextInt(deck.size());
         Card card = deck.get(index);
         deck.remove(index);
         return card;
-    }
-
-    private void calculateScore(List<Card> hand, Player player) {
-        int score = 0;
-        int numAces = 0;
-
-        for (Card card : hand) {
-            if (card.getRank() == Rank.AS) {
-                numAces++;
-                score += 11;
-            } else {
-                score += card.getRank().getValue();
-            }
-        }
-
-        int ace = numAces;
-
-        while (score > BLACKJACK_VALUE && numAces > 0) {
-            score -= 10;
-            numAces--;
-        }
-        player.setScore(score);
     }
 
     public ResponseEntity<?> hit() {

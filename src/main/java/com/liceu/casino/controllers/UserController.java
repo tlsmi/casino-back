@@ -4,19 +4,16 @@ import com.liceu.casino.DTO.ProfileDTO;
 import com.liceu.casino.forms.LoginForm;
 import com.liceu.casino.forms.PasswordForm;
 import com.liceu.casino.forms.ProfileForm;
-import com.liceu.casino.forms.RegisterForm;
 import com.liceu.casino.model.User;
 import com.liceu.casino.services.TokenService;
 import com.liceu.casino.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.apache.el.parser.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 @RestController
 public class UserController {
@@ -148,6 +145,10 @@ public class UserController {
     public Map<String, String> updatePassword(HttpServletResponse response, @RequestBody LoginForm loginForm , @RequestHeader("Authorization") String token) {
 
         Map<String, String> map = new HashMap<>();
+        System.out.println("Token1: " + token);
+        System.out.println("Token2: " + token.replace("Bearer ", ""));
+        User userLogged = userService.findByEmail(tokenService.getEmail(token.replace("Bearer ", "")));
+
         User user = userService.login(loginForm);
         if (user == null) {
             System.out.println("***Credenciales de inicio de sesión incorrectos***");
@@ -155,8 +156,12 @@ public class UserController {
             response.setStatus(400);
             return map;
         }
-        userService.deleteUser(user);
-        map.put("message","ok");
+        if (userLogged.getEmail().equals(user.getEmail())) {
+            userService.deleteUser(userLogged);
+            map.put("message","ok");
+        } else {
+            map.put("message", "Error al borrar usuario, Discrepancia entre emails");
+        }
         return map;
     }
 }

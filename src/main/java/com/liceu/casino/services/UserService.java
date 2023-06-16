@@ -14,15 +14,17 @@ import org.springframework.stereotype.Service;
 public class UserService {
     @Autowired
     UserDAO userdao;
+
+    @Autowired
     SHA512Encoder encoder;
 
     @Autowired
     FormValidations validations;
 
     public boolean signup(ProfileForm registerForm) {
-        //existe un usuario con ese nombre?
+        // Si no existe un usuario con este email ...
         if (userdao.findByEmail(registerForm.getEmail()) != null) return false;
-        //crea y guarda el usuario
+        // Crea y guarda el usuario
         User user = new User(
                 registerForm.getDni(),
                 registerForm.getName(),
@@ -30,7 +32,7 @@ public class UserService {
                 registerForm.getSurname2(),
                 registerForm.getEmail(),
                 registerForm.getBirthDate(),
-                //encriptar contraseña
+                // Encriptar contraseña
                 encoder.encode(registerForm.getPassword())
         );
         userdao.save(user);
@@ -38,14 +40,13 @@ public class UserService {
     }
 
     public User login(LoginForm loginForm) {
-        //si no encuentra usuario con ese email peta
+        // Si no encuentra usuario con ese email ...
         if (userdao.findByEmail(loginForm.getEmail()) == null) return null;
 
-        //crea usuario asociado a ese mail
+        // Crea un usuario asociado a el email enviado
         User u = userdao.findByEmail(loginForm.getEmail());
 
-        //falta comprobar la contraseña encriptada, de momento está sin encriptar
-        //si coincide la contraseña del usuario encontrado con la introducida (ambas encriptadas) lo devuelve
+        // Si coincide la contraseña del usuario encontrado con la introducida (ambas encriptadas) ...
         if (u.getPassword().equals(encoder.encode(loginForm.getPassword()))) return u;
         return null;
     }
@@ -71,14 +72,11 @@ public class UserService {
     }
 
     public boolean validateEmail(ProfileForm profileForm, String oldEmail) {
-        if (userdao.findByEmail(profileForm.getEmail()) != null && !profileForm.getEmail().equals(oldEmail))
-            return false;
-        return true;
+        return userdao.findByEmail(profileForm.getEmail()) == null || profileForm.getEmail().equals(oldEmail);
     }
 
     public boolean validatePassword(String currentPass, String pass) {
-        if (currentPass.equals(encoder.encode(pass))) return true;
-        else return false;
+        return currentPass.equals(encoder.encode(pass));
     }
 
     public void updateProfile(Long id, ProfileForm profileForm) {
