@@ -10,8 +10,6 @@ import com.liceu.casino.utils.SHA512Encoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class UserService {
     @Autowired
@@ -119,5 +117,9 @@ public class UserService {
             }
         }
         return false;
+    }
+
+    public void deleteUser(User user) {
+        userdao.deleteUser(user.getId());
     }
 }
